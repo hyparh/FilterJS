@@ -22,3 +22,13 @@ const displayProducts = (filteredProducts) => {
 };
 
 displayProducts(data);
+
+searchInput.addEventListener("keyup", (e) => {
+    const value = e.target.value.toLowerCase();
+
+    if (value) {
+        displayProducts(data.filter(item => item.name.toLowerCase().indexOf(value) !== -1));
+    } else {
+        displayProducts(data);
+    };
+});
