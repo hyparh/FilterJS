@@ -3,7 +3,7 @@ import { data } from "./database.js";
 const productsContainer = document.querySelector(".products");
 const searchInput = document.querySelector(".search");
 const categoriesContainer = document.querySelector(".cats");
-const priseRange = document.querySelector(".priceRange");
+const priceRange = document.querySelector(".priceRange");
 const priceValue = document.querySelector(".priceValue");
 
 const displayProducts = (filteredProducts) => {
@@ -56,4 +56,21 @@ const setCategories = () => {
     });
 };
 
+const setPrices = () => {
+    const priceList = data.map(item => item.price);
+    const minPrice = Math.min(...priceList);
+    const maxPrice = Math.max(...priceList);
+
+    priceRange.min = minPrice;
+    priceRange.max = maxPrice;
+    priceRange.value = maxPrice;
+    priceValue.textContent = "$" + maxPrice;
+
+    priceRange.addEventListener("input", (e) => {
+        priceValue.textContent = "$" + e.target.value;
+        displayProducts(data.filter(item => item.price <= e.target.value));
+    });
+};
+
 setCategories();
+setPrices();
